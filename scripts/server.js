@@ -19,6 +19,28 @@ function appendData(newData) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(storedData, null, 2));
 }
 
+// Fonction pour supprimer une donnée par index
+function deleteData(index) {
+ 
+  if (index >= 0 && index < storedData.length) {
+    const removed = storedData.splice(index, 1)[0];
+    fs.writeFileSync(DATA_FILE, JSON.stringify(storedData, null, 2));
+    return removed;
+  }
+  return null;
+}
+// Fonction pour tous supprimer 
+function deleteOldDatat(){
+  if (storedData) {
+    const removed = [...storedData];
+    storedData.length = 0;
+    fs.writeFileSync(DATA_FILE, JSON.stringify(storedData, null, 2));
+    return removed;
+  }
+  return null;
+  
+};
+
 const server = http.createServer((req, res) => {
   // Route POST pour ajouter des données
   if (req.method === 'POST' && req.url === '/upload') {
@@ -27,7 +49,7 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const data = JSON.parse(body);
-        appendData(data); // on ajoute la nouvelle donnée
+        appendData(data);
         console.log('Nouvelle donnée ajoutée :', data);
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -43,6 +65,31 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(storedData, null, 2));
   } 
+  // Route DELETE pour supprimer une donnée par index
+  else if (req.method === 'DELETE' && req.url.startsWith('/data/')) {
+    const index = parseInt(req.url.split('/')[2], 10);
+    const removed = deleteData(index);
+
+    if (removed) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Donnée supprimée', removed }));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Index invalide' }));
+    }
+  }
+   else if (req.method === 'DELETE' && req.url.startsWith('/data_all')) {
+    
+    const removed = deleteOldDatat()
+
+    if (removed) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Donnée supprimée', removed }));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Index invalide' }));
+    }
+  }
   // Autres routes
   else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
