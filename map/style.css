@@ -1,0 +1,248 @@
+
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #2ecc71;
+  --background-color: #f5f6fa;
+  --text-color: #2c3e50;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.file-input-wrapper {
+  position: relative;
+}
+
+.custom-file-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  background: white;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--radius);
+  color: var(--primary-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.custom-file-input:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.custom-file-input svg {
+  width: 20px;
+  height: 20px;
+}
+
+#fileInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+}
+
+.location-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  background: var(--secondary-color);
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.location-btn:hover {
+  transform: translateY(-2px);
+}
+
+.location-btn:active {
+  transform: translateY(0);
+}
+
+.location-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.choice-panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+.choice-panel p {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.choice-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.choice-buttons button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+#showRouteBtn {
+  background: var(--primary-color);
+  color: white;
+}
+
+#showMarkersBtn {
+  background: #fdcb6e;
+  color: #2c3e50;
+}
+
+.choice-buttons button:hover {
+  transform: translateY(-2px);
+}
+
+.choice-buttons button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.map-container {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+#map {
+  height: 70vh;
+  min-height: 400px;
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .custom-file-input, .location-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #map {
+    height: 50vh;
+  }
+}
+
+/* Leaflet customization */
+.leaflet-control-zoom {
+  display: block !important;
+  border: none !important;
+  box-shadow: 0 2px 4px var(--shadow-color) !important;
+}
+
+.leaflet-control-zoom a {
+  background: white !important;
+  color: var(--text-color) !important;
+  border: none !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius) !important;
+  box-shadow: 0 4px 6px var(--shadow-color) !important;
+}
+
+.leaflet-popup-content {
+  margin: 0.8rem 1rem !important;
+  font-family: 'Poppins', sans-serif !important;
+}
